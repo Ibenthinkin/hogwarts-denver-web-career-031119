@@ -4,30 +4,31 @@ import React from 'react'
 
   state = {
     clicked: false,
-    dblclicked: false
+    gifUrls: []
   }
 
 
-
-  getGifs = () => {
+  componentDidMount() {
     const url = 'https://api.tenor.com/v1/search?q=pigs&key=LIVDSRZULELA&limit=8&anon_id=3a76e56901d740da9e59ffb22b988242'
-    const result = fetch(url)
-    .then(response => response.json())
-    .then(response => response.results.map(gif => gif.media))
-    .then(gifs => gifs.map(gif => gif[0].tinygif.url))
-    return result
+    fetch(url)
+      .then(response => response.json())
+      .then(response => response.results.map(gif => gif.media))
+      .then(gifs => gifs.map(gif => gif[0].tinygif.url))
+      .then(gifs => {
+        this.setState({
+          gifUrls: gifs
+        })
+      })
+ }
 
-  }
 
-  handledblclick = () => {
-    const giflist = this.getGifs()
-    this.setState({dblclicked: !this.state.dblclicked})
+
+
+  setGif = () => {
     const rando = Math.floor(Math.random() * 7 )
-    // return this.getGifs()[rando]
-    console.log(giflist)
-    console.log(rando)
-    console.log(this.state.dblclicked.toString())
-
+    // console.log(this.state.gifUrls[rando])
+    // this.setState({dblclicked: !this.state.dblclicked})
+    return this.state.gifUrls[rando]
 
   }
 
@@ -44,7 +45,7 @@ import React from 'react'
 
   // <img  src={this.state.hover ? this.handleHover : this.getImage(name)} alt=''/>
 
-  render (){
+  render () {
     const {name} = this.props
 
     const showFront = () => {
@@ -58,19 +59,20 @@ import React from 'react'
 
 
     const showBack = () => {
-      return(
+      return (
         <div>
-        <p>specialty: {this.props.specialty}</p>
-        <p>greased: {this.props.greased.toString()}</p>
-        <p>'weight as a ratio of hog to LG - 24.7
-         Cu. Ft. French Door Refrigerator with Thru-the-Door
-         Ice and Water': {this.props['weight as a ratio of hog to LG - 24.7 Cu. Ft. French Door Refrigerator with Thru-the-Door Ice and Water']}</p>
-        <p>'highest medal achieved': {this.props['highest medal achieved']}</p>
+          <img src={this.setGif()} alt=''/>
+          <p>specialty: {this.props.specialty}</p>
+          <p>greased: {this.props.greased.toString()}</p>
+          <p>'weight as a ratio of hog to LG - 24.7
+           Cu. Ft. French Door Refrigerator with Thru-the-Door
+           Ice and Water': {this.props['weight as a ratio of hog to LG - 24.7 Cu. Ft. French Door Refrigerator with Thru-the-Door Ice and Water']}</p>
+          <p>'highest medal achieved': {this.props['highest medal achieved']}</p>
         </div>
       )
     }
-    return(
-      <div className='pigTile' onClick={this.handleClick} onDoubleClick={this.handledblclick}>
+    return (
+      <div className='pigTile' onClick={this.handleClick} >
         {this.state.clicked ? showBack() : showFront()}
       </div>
     )

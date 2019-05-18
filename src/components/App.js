@@ -34,12 +34,12 @@ class App extends Component {
         this.state.filtered ? this.setState({filtered: false, pigs: hogs}) : this.setState({filtered: true, pigs:pigs})
     }
 
-
   render() {
     return (
       <div className="App">
           < Nav sortByName={this.sortByName} sortByWeight={this.sortByWeight} filterGreased={this.filterGreased}/>
           <Container pigs={this.state.pigs} />
+
       </div>
     )
   }
