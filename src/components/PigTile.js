@@ -7,7 +7,6 @@ import React from 'react'
     gifUrls: []
   }
 
-
   componentDidMount() {
     const url = 'https://api.tenor.com/v1/search?q=pigs&key=LIVDSRZULELA&limit=8&anon_id=3a76e56901d740da9e59ffb22b988242'
     fetch(url)
@@ -21,15 +20,9 @@ import React from 'react'
       })
  }
 
-
-
-
   setGif = () => {
     const rando = Math.floor(Math.random() * 7 )
-    // console.log(this.state.gifUrls[rando])
-    // this.setState({dblclicked: !this.state.dblclicked})
     return this.state.gifUrls[rando]
-
   }
 
   getImage = (name) => {
@@ -41,9 +34,6 @@ import React from 'react'
   handleClick = (e) => {
     this.setState({clicked: !this.state.clicked})
   }
-
-
-  // <img  src={this.state.hover ? this.handleHover : this.getImage(name)} alt=''/>
 
   render () {
     const {name} = this.props
